@@ -105,6 +105,7 @@ def field (case, time, PRE=False, PLOT=False):
             if not exists:
                 for sn in range (0, NSLICE-1):
                     filename = working_dir + 'field/'+field['name']+'_t%g_slice%g' % (t,sn)
+                    print(filename)
                     snapshot = np.loadtxt(filename, dtype = np.str, delimiter='\t')
                     snapshot.reshape([NGRID,NGRID+1])
                     field['value'].append(snapshot[:,0:NGRID].astype(np.float))
@@ -285,7 +286,7 @@ def spectrum_integration(eta, N,L,CHECK=False):
     if CHECK: print('var', np.var(eta))
     
     variance.append(varr)
-    print('mean', np.mean(eta))
+    if CHECK:print('mean', np.mean(eta))
     
     T0 = 2*np.pi # L0/k = 2pi/4pi
     deltaf = 1/ 2*np.pi
@@ -309,7 +310,7 @@ def spectrum_integration(eta, N,L,CHECK=False):
     kxp_tile, kyp_tile = pol2cart(k_tile, theta_tile)
     
     integ = np.sum(F_center)*dkx*dky
-    print('integral',np.sum(F_center)*dkx*dky)
+    if CHECK:print('integral',np.sum(F_center)*dkx*dky)
     
     integral.append(integ)
     
@@ -322,3 +323,25 @@ def spectrum_integration(eta, N,L,CHECK=False):
     polar_integral.append(int_pol)
     
     return k, F_center, F_center_polar_integrated , F_center_polar , k_tile, kxp_tile, kyp_tile , theta_tile , theta , variance, integral, polar_integral , kx, ky
+
+def calculate_parameters(kpHs, uoc, u, kp):
+    # Convert kpHs and uoc to their numeric values
+    ak = float(kpHs.replace('p', '.'))
+    uoc_val = float(uoc.replace('p', '.'))
+
+    # Determine the value of g based on uoc
+    if uoc_val == 0.50:
+        g = 1
+    elif uoc_val == 0.25:
+        g = 4
+    elif uoc_val == 0.75:
+        g = 0.5
+    else:
+        raise ValueError("uoc value not recognized. Please use 0p25, 0p50, or 0p75.")
+    
+    c = u / uoc_val
+    omegap = np.sqrt(g * kp)
+    Re_water = 2.5 * 10**4
+    nu_water = c * 2 * m.pi / (4 * Re_water)
+
+    return ak, c, omegap, nu_water, g, uoc_val
