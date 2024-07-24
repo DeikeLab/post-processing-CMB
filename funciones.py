@@ -345,3 +345,122 @@ def calculate_parameters(kpHs, uoc, u, kp):
     nu_water = c * 2 * m.pi / (4 * Re_water)
 
     return ak, c, omegap, nu_water, g, uoc_val
+
+
+def spectrum3D_subdivisions(DataEta, time, ln, zero_padding=True, CHECK = True):
+    '''
+    Compute 3D Fourier Transform in Space and Time over subdivisions of length ln overlapped at 50%
+    in DataEta and calculate different spectra.
+    
+    DataEta: list with eta (2D) at different times.
+    time: vector time associated with this eta.
+    ln: length of subdivisions in DataEta.
+    zero_padding: apply zero padding to each subdivision to improve omega resolution.
+    '''
+
+    dt = time[1] - time[0]  # Sampling intervals, (s)
+    T = time[-1] - time[0]  # Total duration
+    
+    L0 = 2 * np.pi
+    dx = L0 / N  # Spatial sampling step along X in (m)
+    dy = L0 / N  # Spatial sampling step along Y in (m)
+    
+    # Initialize lists to store spectra for each subdivision
+    all_F_xyomega = []
+    all_F_kthetaomega = []
+    all_F_komega = []
+    all_F_ktheta = []
+    all_amplitudes = []
+    all_amplitudes_k = []
+    hann_window = np.hanning(ln)
+
+    overlap_factor = 0.5
+    overlap = int(ln * overlap_factor)
+    # Process each subdivision of length ln
+    eta_time=[]
+    for start_idx in range(0, len(DataEta) - overlap, ln - overlap):
+        end_idx = start_idx + ln
+        
+        time_subdivision = np.array(time[start_idx:end_idx])
+        data_subdivision = np.array(DataEta[start_idx:end_idx])
+        
+        if end_idx > len(DataEta):
+            # In this case, we can choose to either skip the last window or include it with padding.
+            break
+        
+        for i in range(data_subdivision.shape[1]):  # Loop over the second dimension
+            for j in range(data_subdivision.shape[2]):  # Loop over the third dimension
+                data_subdivision[:, i, j] *= hann_window
+        
+        if zero_padding:
+            padding_length = ln  # Define the padding length, here equal to the length of the subdivision
+            data_subdivision = np.pad(data_subdivision, ((0, padding_length), (0, 0), (0, 0)), 'constant')
+
+        dt = time_subdivision[1] - time_subdivision[0]
+        T = time_subdivision[-1] - time_subdivision[0] 
+        x_max = dx * data_subdivision.shape[2]
+        y_max = dy * data_subdivision.shape[1]
+        
+        # Frequencies and wavenumbers for the subdivision
+        eta_time.append(data_subdivision)
+        
+        omega = 2 * np.pi * np.fft.fftshift(np.fft.fftfreq(data_subdivision.shape[0], dt))
+        wavenumber = 2 * np.pi * np.fft.fftfreq(N, L0 / N)
+        theta = np.linspace(0, 2 * np.pi, N)  # Assuming N points for theta as well
+        kx = np.fft.fftshift(wavenumber)
+        ky = kx
+        k = wavenumber[0:int(N/2)]
+        
+        spectrum3D = np.fft.fftn(data_subdivision / (N**3))  # FFT normalization for the subdivision
+        spectrum3D = np.fft.fftshift(spectrum3D, axes=(0, 1, 2))
+        
+        # Compute power spectrum for the subdivision
+        dk = k[1]-k[0]
+        dkx = kx[1] - kx[0]
+        dky = ky[1] - ky[0]
+        domega = omega[1] - omega[0] if len(omega) > 1 else omega[0] 
+        F_3D = (np.absolute(spectrum3D))**2 / (N**2) / ln / (dkx * dky * domega**2)
+        
+        # Compute Fourier amplitude spectrum
+        amplitudes = np.sqrt(np.real(spectrum3D)**2 + np.imag(spectrum3D)**2) / (N**2) / ln
+        all_amplitudes.append(amplitudes)
+        
+        kx_tile, ky_tile = np.meshgrid(kx, ky)  # kx-ky space
+        k_tile, theta_tile = np.meshgrid(k, theta)  # k-theta space
+        kxp_tile, kyp_tile = pol2cart(k_tile, theta_tile)
+        Omega, K = np.meshgrid(omega, k) # k-omega space
+        
+        F_xy_interval=[]
+        F_komega_interval =[]
+        F_ktheta_interval = []
+        amplitudes_k_interval = []
+        for i in range(data_subdivision.shape[0]):  # Loop over the frequencies (omega)
+            F_xy = F_3D[i]  # Spectrum F(kx,ky) for each (512,512) in the interval  
+            F_ktheta = scipy.interpolate.griddata((kx_tile.ravel(), ky_tile.ravel()), F_xy.ravel(), (kxp_tile, kyp_tile), method='nearest')  # F(omega,kx,ky) --> F(omega,k,theta) for each freq i
+            dtheta = theta[1] - theta[0]
+            F_komega = np.sum(F_ktheta * k_tile, axis = 0) * dtheta  # Integral in theta for each freq 
+            
+            F_xy_interval.append(F_xy)
+            F_komega_interval.append(F_komega)
+            F_ktheta_interval.append(F_ktheta)
+            
+            # Calculate amplitude in terms of k
+            amplitudes_k = np.sqrt(np.sum(np.abs(F_ktheta)**2, axis=0) * dtheta * domega)  # Sum amplitudes in theta direction
+            amplitudes_k_interval.append(amplitudes_k)
+            
+            if CHECK:
+                F_xy_integral = np.sum(F_xy) * dkx * dky * domega
+                F_ktheta_integral = np.sum(F_komega) * dk * domega
+                print(f"Frequency {i} within subdivision from {start_idx} to {end_idx}")
+                print(f"F_xyomega integral: {F_xy_integral}")
+                print(f"F_ktheta integral: {F_ktheta_integral}")
+        
+        # Append the spectra for this subdivision
+        all_F_xyomega.append(F_xy_interval)
+        all_F_komega.append(F_komega_interval)
+        all_F_ktheta.append(F_ktheta_interval)
+        all_F_ktheta.append(F_ktheta_interval)
+        all_amplitudes_k.append(amplitudes_k_interval)
+    
+
+    return k, omega, k_tile, theta_tile, kx, kx_tile, ky_tile, all_F_xyomega, all_F_komega, Omega, K, all_F_ktheta, eta_time, all_amplitudes, all_amplitudes_k
