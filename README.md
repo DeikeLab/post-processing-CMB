@@ -21,13 +21,25 @@ So it's necessary to define
   
 - **2Dspectra.ipynb**  
   Compares branches and includes automatic 2D analysis of spectra. Calculates
-  - Energy spectrum E(k).
-  - Wave growth rate beta(k).
-  - 
+  - $E(k_x,k_y)$
+  - $E(k,\theta)$
+  - Energy spectrum $E(k)$.
+  - Wave growth rate $\beta(k)$.
+    (I think I will remove it once **2Dspectra_newpath.ipynb** is completely working)
 - **2Dspectra_newpath.ipynb**  
   Focuses on correcting the path in 2D spectral data so we can use the path $ work_dir = f'/projects/DEIKE/nscapin/broadband_reorder/re{reA}_bo0{Bo}_P{kpHs}_uoc{uoc}_reW{reW}_L{maxLevel}/'$
-- **3D_spectra.ipynb**  
+  This eta_series is a post-processed eta series where we remove discontinuities in the surface due to drops and bubbles, the creation of this file can be found in **Total3Dspectra.ipynb**.
+  
+  - $E(k_x,k_y)$
+  - $E(k,\theta)$
+  - Energy spectrum $E(k)$.
+  - Wave growth rate $\beta(k)$.
+  - Files created here:
+    -  'eta_series_re{reA}_bo0{Bo}_P{kpHs}_uoc{uoc}_reW{reW}_L{maxLevel}_energies.csv'**, names=['i', 'k', 'F_integral_interval', 'time']'
+    -  df_beta = ([df_growth, df_decay]): '/projects/DEIKE/cmartinb/betas/betas_re{reA}_bo0{Bo}_P{kpHs}_uoc{uoc}_reW{reW}_L{maxLevel}.csv' df_growth = pd.DataFrame({'Tipo': 'Growth', 'Beta': beta_growth, 'k': k_growth}) df_decay = pd.DataFrame({'Tipo': 'Decay','Beta': beta_decay,'k': k_decay })
 
+- **3D_spectra.ipynb**
+- 
 - **3Dspectra.ipynb**  
   Energy spectra in 3D in time. We divide the data simulation in intervals of longitude 4 periods of the wave. Then we obtain the
   - $E(t,\omega, k_x, k_y)$
