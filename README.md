@@ -58,21 +58,20 @@ So it's necessary to define
   It does the 3D spectra analysis adding the calcul of the amplitudes RMS over the different intervals and wave numbers. 
 
 - **3Dspectra_velocities.ipynb**  
-  Compares high Reynolds numbers across all beta values using 3D total spectra. It is also used for analyzing velocity profiles.
 
 - **Total3Dspectra.ipynb**  
-  Similar to `3Dspectra_velocities.ipynb`, but with a broader focus on comparing all beta values across different cases.
+  Similar to `3Dspectra.ipynb`, but not dividing the spectra in different time intervals, so it's just the 3D spectra analysis in $(k,\omega,t)$. The aim is for obtaining the $\omega$ so we can normalize the $\beta(k)$ from the 2D spectra analysis. This frequency omega is saved as a modified last column in the file 'betas_re{reA}_bo0{Bo}_P{kpHs}_uoc{uoc}_reW{reW}_L{maxLevel}.csv'
 
 - **Totalenergy_all.ipynb**  
-  Post-processing of energy data for one specific case. This notebook consolidates energy data from various outputs.
 
 - **compare_Reynolds.ipynb**  
   Compares Reynolds numbers across all beta values using 3D total spectra.
+  
 - **compare_beta_diffRE.ipynb**  
   Handles proper path corrections in 2D data and compares different beta values, particularly for different Reynolds numbers.
 
 - **compare_branches.ipynb**  
-  Compares branches andat different cases.
+  Compares branches for different cases.
 
 - **compare_growthcont.ipynb**  
   Post-processing of growth continuation data for different cases.
