@@ -4,18 +4,39 @@ This repository contains code for the post-processing of Wind Wave simulation da
 
 ## File Descriptions
 
-- **2D_spectra.ipynb**  
+Some notebooks create DataFrames where I storage the data so it's easier to work with it each time. For most of them, the directory is loaded using:
+
+'work_dir = f'/projects/DEIKE/nscapin/broadband_reorder/re{reA}_bo0{Bo}_P{kpHs}_uoc{uoc}_reW{reW}_L{maxLevel}/' 
+
+So it's necessary to define 
+* reA: Air Reynolds number
+* Bo: Bond numer
+* kpHs: initial condition wave stepness
+* uoc: ratio friction velocity and phase velocity
+* reW: Water Reynolds numer
+* L: Max Level Refinement
+
+- **2D_spectra.ipynb**
+  
   
 - **2Dspectra.ipynb**  
-  Compares branches and includes automatic 2D analysis of spectra
+  Compares branches and includes automatic 2D analysis of spectra. Calculates
+  - Energy spectrum E(k).
+  - Wave growth rate beta(k).
+  - 
 - **2Dspectra_newpath.ipynb**  
   Focuses on correcting the path in 2D spectral data so we can use the path $ work_dir = f'/projects/DEIKE/nscapin/broadband_reorder/re{reA}_bo0{Bo}_P{kpHs}_uoc{uoc}_reW{reW}_L{maxLevel}/'$
 - **3D_spectra.ipynb**  
 
 - **3Dspectra.ipynb**  
-  Automates the search for branches and performs a
+  Energy spectra in 3D in time. We divide the data simulation in intervals of longitude 4 periods of the wave. Then we obtain the
+  - $E(t,\omega, k_x, k_y)$
+  - $E(t,\omega, k, \theta)$
+  - $E(t,\omega, k) \rightarrow $ Dispersion relation space.
+  - $E(t,\omega, k_fixed)$
+  - 3D $E(t,\omega, k, \theta)$ graphs
 - **3Dspectra_amplitudes.ipynb**  
-  Analyzes amplitudes within the simulation data, with a focus on high Reynolds numbers.
+  It does the 3D spectra analysis adding the calcul of the amplitudes RMS over the different intervals and wave numbers. 
 
 - **3Dspectra_velocities.ipynb**  
   Compares high Reynolds numbers across all beta values using 3D total spectra. It is also used for analyzing velocity profiles.
