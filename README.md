@@ -34,9 +34,16 @@ So it's necessary to define
   - $E(k,\theta)$
   - Energy spectrum $E(k)$.
   - Wave growth rate $\beta(k)$.
+  - Energy behavior each mode.
+  - Caracteristic time where decrease/increase change to increase/decrease
+  - $\beta(k)$ for times smaller than this one.
   - Files created here:
     -  'eta_series_re{reA}_bo0{Bo}_P{kpHs}_uoc{uoc}_reW{reW}_L{maxLevel}_energies.csv'**, names=['i', 'k', 'F_integral_interval', 'time']'
     -  df_beta = ([df_growth, df_decay]): '/projects/DEIKE/cmartinb/betas/betas_re{reA}_bo0{Bo}_P{kpHs}_uoc{uoc}_reW{reW}_L{maxLevel}.csv' df_growth = pd.DataFrame({'Tipo': 'Growth', 'Beta': beta_growth, 'k': k_growth}) df_decay = pd.DataFrame({'Tipo': 'Decay','Beta': beta_decay,'k': k_decay })
+    - df_datos = pd.DataFrame({'kp_minimos': kp_minimos, 'tiempos_minimos': tiempos_minimos}) saves in df_datos.to_csv(f'/projects/DEIKE/cmartinb/datos/datos_re{reA}_bo0{Bo}_P{kpHs}_uoc{uoc}_reW{reW}_L{maxLevel}.csv.csv', index=False).
+    - df_growth_below_time = pd.DataFrame({'Tipo': 'Growth', 'Beta': beta_growth_below_time, 'k': k_growth_below_time}) df_decay_below_time = pd.DataFrame({'Tipo': 'Decay', 'Beta': beta_decay_below_time,'k': k_decay_below_time }), df_beta_below_time = pd.concat([df_growth_below_time, df_decay_below_time], axis=0).reset_index(drop=True) df_beta_below_time.to_csv(f'/projects/DEIKE/cmartinb/betas/betas_re{reA}_bo0{Bo}_P{kpHs}_uoc{uoc}_reW{reW}_L{maxLevel}_below_{tiempo_caracteristico}.csv', index=False)
+
+
 
 - **3D_spectra.ipynb**
 - 
@@ -44,7 +51,7 @@ So it's necessary to define
   Energy spectra in 3D in time. We divide the data simulation in intervals of longitude 4 periods of the wave. Then we obtain the
   - $E(t,\omega, k_x, k_y)$
   - $E(t,\omega, k, \theta)$
-  - $E(t,\omega, k) \rightarrow $ Dispersion relation space.
+  - $E(t,\omega, k)$ Dispersion relation space.
   - $E(t,\omega, k_fixed)$
   - 3D $E(t,\omega, k, \theta)$ graphs
 - **3Dspectra_amplitudes.ipynb**  
