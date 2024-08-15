@@ -1,1 +1,56 @@
 # post-processing-clara
+
+This repository contains code for the post-processing of Wind Wave simulation data. The results presented in the graphs correspond to simulations initialized with a broadbanded wave field. Each script is designed to handle different aspects of the post-processing, ranging from spectral analysis to the comparison of various parameters such as Reynolds numbers and velocities.
+
+## File Descriptions
+
+- **2D_spectra.ipynb**  
+  
+- **2Dspectra.ipynb**  
+  Compares branches and includes automatic 2D analysis of spectra
+- **2Dspectra_newpath.ipynb**  
+  Focuses on correcting the path in 2D spectral data so we can use the path $ work_dir = f'/projects/DEIKE/nscapin/broadband_reorder/re{reA}_bo0{Bo}_P{kpHs}_uoc{uoc}_reW{reW}_L{maxLevel}/'$
+- **3D_spectra.ipynb**  
+
+- **3Dspectra.ipynb**  
+  Automates the search for branches and performs a
+- **3Dspectra_amplitudes.ipynb**  
+  Analyzes amplitudes within the simulation data, with a focus on high Reynolds numbers.
+
+- **3Dspectra_velocities.ipynb**  
+  Compares high Reynolds numbers across all beta values using 3D total spectra. It is also used for analyzing velocity profiles.
+
+- **Total3Dspectra.ipynb**  
+  Similar to `3Dspectra_velocities.ipynb`, but with a broader focus on comparing all beta values across different cases.
+
+- **Totalenergy_all.ipynb**  
+  Post-processing of energy data for one specific case. This notebook consolidates energy data from various outputs.
+
+- **compare_Reynolds.ipynb**  
+  Compares Reynolds numbers across all beta values using 3D total spectra.
+- **compare_beta_diffRE.ipynb**  
+  Handles proper path corrections in 2D data and compares different beta values, particularly for different Reynolds numbers.
+
+- **compare_branches.ipynb**  
+  Compares branches andat different cases.
+
+- **compare_growthcont.ipynb**  
+  Post-processing of growth continuation data for different cases.
+- **funciones.py**  
+  Contain functions used along the notebooks.
+
+- **high_RE.ipynb**  
+  Similar to `3Dspectra.ipynb`, but focusing on changing to also high Reynolds, the pathused is the broadbanded_reorder.
+- **kx_study.ipynb**  
+  Directional spectra analysis in the '$k_x$' direction.
+- **spectrum.ipynb**  
+
+- **velocity_profiles.ipynb**  
+  Automatically generates velocity profiles from simulation data.
+## How to Use
+
+Each notebook is self-contained and can be run independently, depending on the specific analysis you wish to conduct. The scripts are designed to handle large datasets typical of Wind Wave simulations. Ensure that all necessary dependencies are installed and that paths to data files are correctly configured before running the notebooks. Some notebooks produce DataFrames that are used in other notebooks for compare different cases.
+## Requirements
+
+- Python 3.x
+- Jupyter Notebook
