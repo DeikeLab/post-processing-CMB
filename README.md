@@ -82,11 +82,11 @@ So it's necessary to define
 - **high_RE.ipynb**  
   Similar to `3Dspectra.ipynb`, but focusing on changing to also high Reynolds, the pathused is the broadbanded_reorder.
 - **kx_study.ipynb**  
-  Directional spectra analysis in the '$k_x$' direction.
+  Directional spectra analysis in the $k_x$ direction.
 - **spectrum.ipynb**  
 
 - **velocity_profiles.ipynb**  
-  Automatically generates velocity profiles from simulation data.
+  Automatically generates velocity profiles from simulation data, extraction of the velocity for Air and Water, and its evolution in time. Extraction mean velocity in each time interval at the surface.
 ## How to Use
 
 Each notebook is self-contained and can be run independently, depending on the specific analysis you wish to conduct. The scripts are designed to handle large datasets typical of Wind Wave simulations. Ensure that all necessary dependencies are installed and that paths to data files are correctly configured before running the notebooks. Some notebooks produce DataFrames that are used in other notebooks for compare different cases.
