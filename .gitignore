@@ -158,3 +158,14 @@ cython_debug/
 #  and can be added to the global gitignore or merged into this file.  For a more nuclear
 #  option (not recommended) you can uncomment the following to ignore the entire idea folder.
 #.idea/
+
+# Wind-wave simulation output (see interface_statistics/): only derived statistics
+# belong in this repo, never the raw case data, which runs to ~450 GB per case.
+dump_*.bin
+restart*.bin
+restart_bk/
+*.ppm
+*.gfs
+*.vtu
+*.vtk
+*.silo

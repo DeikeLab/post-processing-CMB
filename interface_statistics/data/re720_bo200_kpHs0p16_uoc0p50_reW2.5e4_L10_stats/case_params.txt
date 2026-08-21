@@ -1,0 +1,82 @@
+************************
+maximum runtime = 8.6340000000e+04 seconds
+Check of input parameters only
+ Re_ast = 7.2000000000e+02
+  Bo = 2.0000000000e+02
+  Re_wave = 2.5597571943e+04
+  UstarRATIO = 5.0000000000e-01
+  a_0k = 3.0000000000e-01
+  r_L0lam = 4.0000000000e+00
+  Reference density = 1.225000E-03
+  Reference dynamic viscosity = 2.247188E-06
+  MAX LEVEL = 10
+  MIN LEVEL = 6
+  RELEASETIME = 1.6292800000e+03
+  uemaxRatio = 3.0000000000e-01
+  tend = 1.0000000000e+14
+  do_eta_loc = 1
+  do_profile = 1
+  do_fields  = 0
+  do_slices  = 0
+  do_tagging = 0
+  Printing resolution = 9
+  Restart from precursor = 0
+  st_wave = 0
+  MY_RAND = 2
+  N_mod = 64
+  do_eta_stats = 1
+  eta_stats_stride = 1
+  eta_stats_window_Tp = 2.0000000000e+00
+  eta_pdf_bins = 161
+  eta_stats_keep_last_windows = 50
+ ************************
+RELEASETIME = 1.6292800000e+03, uemax = 7.5000000000e-02, uwemax = 5.0000000000e-04, femax = 1.0000000000e-04
+
+events (i = 0, t = 0)
+  defaults                  src/iforce.h:30
+  defaults                  src/navier-stokes/conserving.h:37
+  defaults                  src/two-phase-generic.h:10
+  defaults                  src/vof.h:127
+  defaults                  src/vof.h:107
+  defaults                  src/navier-stokes/centered.h:126
+  defaults                  src/run.h:42
+  default_display           src/navier-stokes/centered.h:194
+  init                      curved_fixREtau.c:792
+************************
+A-posteriori check of simulation parameters
+ Re_ast = 7.2000000000e+02
+  Bo = 2.0000000000e+02
+  Re_wave = 2.5597571943e+04
+  UstarRATIO = 5.0000000000e-01
+  a_0k = 3.0000000000e-01
+  r_L0lam = 4.0000000000e+00
+  Reference density = 1.225000E-03
+  Reference dynamic viscosity = 2.247188E-06
+  MAX LEVEL = 10
+  MIN LEVEL = 6
+  RELEASETIME = 1.6292800000e+03
+  uemaxRATIO = 3.0000000000e-01
+  alter_MU = 4.0000000001e+00
+  end_sim  = 1.0000000000e+14
+  do_eta_loc = 1
+  do_profile = 1
+  do_fields  = 0
+  do_slices  = 0
+  do_tagging = 0
+  gravity = 9.9503093987e-01
+  RHO_RATIO = 8.1632653061e+02
+  MU_RATIO  = 1.3653741125e+01
+  Surface tension = 3.1056625843e-04
+  Friction velocity = 2.5000000000e-01
+  T0 = 3.1415926536e+00
+  We_w = 1.2644615152e+03
+  Fr_w = 1.5994974298e-01
+  We_a = 1.3024398630e+00
+  Fr_a = 1.1889061908e-02
+  Printing resolution = 9
+  Restart from precursor = 0
+  st_wave = 0
+  MY_RAND = 2
+  N_mod = 64
+ ************************
+Create directories if needed

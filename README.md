@@ -86,6 +86,16 @@ So it's necessary to define
 
 - **velocity_profiles.ipynb**  
   Automatically generates velocity profiles from simulation data, extraction of the velocity for Air and Water, and its evolution in time. Extraction mean velocity in each time interval at the surface.
+- **interface_statistics/** (folder)
+  Windowed statistics of the interface itself rather than its spectrum: moments of $\eta$,
+  moments of the surface slopes $\partial_x\eta$ and $\partial_z\eta$, and the PDFs of the
+  normalised elevation $\xi = (\eta - \langle\eta\rangle)/\sigma_\eta$. These are
+  accumulated by the solver into small text tables during the run, so this folder ships its
+  own copy of the data in `interface_statistics/data/<case>/` (a few MB per case) and does
+  not read `work_dir` at run time. See `interface_statistics/README.md`, in particular the
+  note on `eta_stats_window.out` being a trace of the running accumulator rather than one
+  row per window.
+
 ## How to Use
 
 Each notebook is self-contained and can be run independently, depending on the specific analysis you wish to conduct. The scripts are designed to handle large datasets typical of Wind Wave simulations. Ensure that all necessary dependencies are installed and that paths to data files are correctly configured before running the notebooks. Some notebooks produce DataFrames that are used in other notebooks for compare different cases.
